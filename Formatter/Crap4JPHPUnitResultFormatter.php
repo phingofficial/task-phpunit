@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,57 +18,76 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext\Formatter;
+namespace Phing\Task\Ext\PhpUnit\Formatter;
 
-use Phing\Task\Ext\PHPUnitTask;
+use Phing\Task\Ext\PhpUnit\PHPUnitTask;
 use PHPUnit\Framework\TestResult;
+use PHPUnit\Runner\Version;
 
 /**
- * Prints Clover HTML code coverage of the tests
+ * Prints Clover XML output of the test
  *
- * @author  Blair Cooper <dev@raincitysolutions.com>
+ * @author  Daniel Kreckel <daniel@kreckel.koeln>
  * @package phing.tasks.ext.formatter
  */
-class CloverHtmlPHPUnitResultFormatter extends PHPUnitResultFormatter
+class Crap4JPHPUnitResultFormatter extends PHPUnitResultFormatter
 {
     /**
      * @var TestResult
      */
     private $result = null;
-
     /**
+     * PHPUnit version
+     *
      * @var string
      */
-    private $toDir = '.';
+    private $version = null;
 
     /**
      * @param PHPUnitTask $parentTask
      */
-    public function __construct(PHPUnitTask $parentTask, string $toDir)
+    public function __construct(PHPUnitTask $parentTask)
     {
         parent::__construct($parentTask);
+        $this->version = Version::id();
+    }
 
-        $this->toDir = $toDir;
+    /**
+     * @return string
+     */
+    public function getExtension()
+    {
+        return '.xml';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreferredOutfile()
+    {
+        return 'crap4j-coverage';
     }
 
     /**
      * @param TestResult $result
      */
-    public function processResult(TestResult $result): void
+    public function processResult(TestResult $result)
     {
         $this->result = $result;
     }
 
-    public function endTestRun(): void
+    public function endTestRun()
     {
         $coverage = $this->result->getCodeCoverage();
-
         if (!empty($coverage)) {
-            $cloverClass = '\SebastianBergmann\CodeCoverage\Report\Html\Facade';
-            $clover = new $cloverClass();
-            $clover->process($coverage, $this->toDir);
+            $crapClass = '\SebastianBergmann\CodeCoverage\Report\Crap4j';
+            $crap = new $crapClass();
+            $contents = $crap->process($coverage);
+            if ($this->out) {
+                $this->out->write($contents);
+                $this->out->close();
+            }
         }
-
         parent::endTestRun();
     }
 }

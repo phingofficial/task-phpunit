@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,20 +18,20 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext;
+namespace Phing\Task\Ext\PhpUnit;
 
 use Phing\Exception\BuildException;
 use Phing\Io\IOException;
 use Phing\Io\File;
 use Phing\Phing;
 use Phing\Task;
-use Phing\Task\Ext\Formatter\CloverHtmlPHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\CloverPHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\Crap4JPHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\PHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\PlainPHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\SummaryPHPUnitResultFormatter;
-use Phing\Task\Ext\Formatter\XMLPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\CloverHtmlPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\CloverPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\Crap4JPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\PHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\PlainPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\SummaryPHPUnitResultFormatter;
+use Phing\Task\Ext\PhpUnit\Formatter\XMLPHPUnitResultFormatter;
 
 /**
  * A wrapper for the implementations of PHPUnit2ResultFormatter.

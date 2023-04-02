@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,7 +18,7 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext;
+namespace Phing\Task\Ext\PhpUnit;
 
 use Exception;
 use Phing\Exception\BuildException;
@@ -150,7 +151,7 @@ class PHPUnitTestRunner9 implements \PHPUnit\Runner\TestHook, \PHPUnit\Framework
 
                 if (method_exists($filter, 'includeFiles')) {
                     $filter->includeFiles($whitelist);
-                } else if (method_exists($filter, 'addFilesToWhiteList')) {
+                } elseif (method_exists($filter, 'addFilesToWhiteList')) {
                     $filter->addFilesToWhiteList($whitelist);
                 }
             }

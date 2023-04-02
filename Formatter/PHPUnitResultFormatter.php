@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,12 +18,12 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext\Formatter;
+namespace Phing\Task\Ext\PhpUnit\Formatter;
 
 use Exception;
 use Phing\Io\Writer;
 use Phing\Project;
-use Phing\Task\Ext\PHPUnitTask;
+use Phing\Task\Ext\PhpUnit\PHPUnitTask;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestListener;

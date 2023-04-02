@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,19 +18,18 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext\Formatter;
+namespace Phing\Task\Ext\PhpUnit\Formatter;
 
-use Phing\Task\Ext\PHPUnitTask;
+use Phing\Task\Ext\PhpUnit\PHPUnitTask;
 use PHPUnit\Framework\TestResult;
-use PHPUnit\Runner\Version;
 
 /**
- * Prints Clover XML output of the test
+ * Prints Clover HTML code coverage of the tests
  *
- * @author  Siad Ardroumli <siad.ardroumli@gmail.com>
+ * @author  Blair Cooper <dev@raincitysolutions.com>
  * @package phing.tasks.ext.formatter
  */
-class CloverPHPUnitResultFormatter extends PHPUnitResultFormatter
+class CloverHtmlPHPUnitResultFormatter extends PHPUnitResultFormatter
 {
     /**
      * @var TestResult
@@ -37,60 +37,36 @@ class CloverPHPUnitResultFormatter extends PHPUnitResultFormatter
     private $result = null;
 
     /**
-     * PHPUnit version
-     *
      * @var string
      */
-    private $version = null;
+    private $toDir = '.';
 
     /**
      * @param PHPUnitTask $parentTask
      */
-    public function __construct(PHPUnitTask $parentTask)
+    public function __construct(PHPUnitTask $parentTask, string $toDir)
     {
         parent::__construct($parentTask);
 
-        $this->version = Version::id();
-    }
-
-    /**
-     * @return string
-     */
-    public function getExtension()
-    {
-        return ".xml";
-    }
-
-    /**
-     * @return string
-     */
-    public function getPreferredOutfile()
-    {
-        return "clover-coverage";
+        $this->toDir = $toDir;
     }
 
     /**
      * @param TestResult $result
      */
-    public function processResult(TestResult $result)
+    public function processResult(TestResult $result): void
     {
         $this->result = $result;
     }
 
-    public function endTestRun()
+    public function endTestRun(): void
     {
         $coverage = $this->result->getCodeCoverage();
 
         if (!empty($coverage)) {
-            $cloverClass = '\SebastianBergmann\CodeCoverage\Report\Clover';
+            $cloverClass = '\SebastianBergmann\CodeCoverage\Report\Html\Facade';
             $clover = new $cloverClass();
-
-            $contents = $clover->process($coverage);
-
-            if ($this->out) {
-                $this->out->write($contents);
-                $this->out->close();
-            }
+            $clover->process($coverage, $this->toDir);
         }
 
         parent::endTestRun();

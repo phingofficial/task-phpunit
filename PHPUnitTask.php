@@ -1,4 +1,5 @@
 <?php
+
 /**
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -17,7 +18,7 @@
  * <http://phing.info>.
  */
 
-namespace Phing\Task\Ext;
+namespace Phing\Task\Ext\PhpUnit;
 
 use Exception;
 use Phing\Exception\BuildException;
@@ -402,16 +403,7 @@ class PHPUnitTask extends Task
         }
 
         $config = (new Loader())->load($configuration->getAbsolutePath());
-
-        if (empty($config)) {
-            return [];
-        }
-
         $phpunit = $config->phpunit();
-
-        if (empty($phpunit)) {
-            return [];
-        }
 
         if ($phpunit->hasBootstrap()) {
             $this->setBootstrap($phpunit->bootstrap());
